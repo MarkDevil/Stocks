@@ -9,7 +9,7 @@ class Stocks:
     def __init__(self):
         pass
 
-    def findAgent():
+    def findAgent(self):
         df = ts.inst_tops(10)
         df.sort_values(by='bamount')
         print df[df.net >= 10000]
@@ -17,7 +17,7 @@ class Stocks:
 
 
     # 获取分红信息
-    def getProfit(year, top, shares=0, divi=0):
+    def getProfit(self, year, top, shares=0, divi=0):
         df = ts.profit_data(year=year, top=top)
         # df.sort('shares', ascending=False)
         df.sort_values(by='divi')
@@ -27,3 +27,6 @@ class Stocks:
         pass
 
 
+
+if __name__ == '__main__':
+    Stocks().findAgent()

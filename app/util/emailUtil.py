@@ -41,6 +41,8 @@ class Sendmail:
             return False
 
 
+
+
 if __name__ == '__main__':
 
     mailto_list = [str(ReadWriteConfFile.getSectionValue("maillist","user"))]

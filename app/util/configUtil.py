@@ -28,6 +28,7 @@ class ReadWriteConfFile:
         cf = ReadWriteConfFile.getConfigParser()
         return cf.get(section, key)
 
+
     @staticmethod
     def addSection(section):
         cf = ReadWriteConfFile.getConfigParser()
