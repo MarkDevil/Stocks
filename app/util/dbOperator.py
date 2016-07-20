@@ -77,7 +77,7 @@ class Mysql():
                 logging.info("execute sql successfully")
             except:
                 db.rollback()
-                logging.info("execute sql successfully")
+                logging.info("execute sql failed")
 
 
 

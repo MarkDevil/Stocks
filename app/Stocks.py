@@ -3,11 +3,14 @@ from flask import Flask, request
 
 from app.core.stocks import Stocks
 from app.util.emailUtil import Sendmail
+import time
 
 
 app = Flask(__name__)
 
-sendobj = Sendmail("mamingfeng007@163.com")
+maillist = ["575707315@qq.com"]
+sendobj = Sendmail(mailto_list=maillist)
+subjectTitle = '股票机构买入榜单'
 
 
 @app.route('/fgateway', methods=["GET", "POST"])
@@ -19,7 +22,8 @@ def fgateway():
 @app.route('/getstocks')
 def index():
     agentstocks = Stocks().findAgent()
-    sendobj.send_mail("send email", str(agentstocks))
+    sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
+    time.sleep(50)
     return str(agentstocks).decode("utf-8")
 
 
