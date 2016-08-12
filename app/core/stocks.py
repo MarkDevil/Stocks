@@ -5,15 +5,15 @@ import tushare as ts
 
 
 class Stocks:
-
     def __init__(self):
         pass
 
     def findAgent(self):
         df = ts.inst_tops(10)
-        df.sort_values(by='bamount')
-        print df[df.net >= 10000]
-        return df[df.net >= 10000]
+        df.sort_values(by='bcount')
+
+        print df[(df.net) > 10000]
+        return df[(df.net) > 10000]
 
 
     # 获取分红信息
@@ -25,7 +25,6 @@ class Stocks:
 
     def getAgentStocks(self):
         pass
-
 
 
 if __name__ == '__main__':

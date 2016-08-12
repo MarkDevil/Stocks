@@ -9,7 +9,7 @@ class ReadWriteConfFile:
 
     currentDir = os.path.dirname(__file__)
     filepath = currentDir + os.path.sep + "setting.ini"
-    print filepath
+    #print filepath
 
     @staticmethod
     def getConfigParser():
@@ -32,8 +32,8 @@ class ReadWriteConfFile:
     @staticmethod
     def addSection(section):
         cf = ReadWriteConfFile.getConfigParser()
-        allSections = cf.sections()
-        if section in allSections:
+        allsections = cf.sections()
+        if section in allsections:
             return
         else:
             cf.add_section(section)

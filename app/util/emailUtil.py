@@ -7,8 +7,8 @@ from app.util.configUtil import ReadWriteConfFile
 
 __author__ = '201512010283'
 
-class Sendmail:
 
+class Sendmail:
     def __init__(self, mailto_list):
         self.mailto_list = mailto_list
         self.mail_host = "smtp.163.com"  # 设置服务器
@@ -16,12 +16,12 @@ class Sendmail:
         self.mail_pass = "crystal08"  # 口令
         self.mail_postfix = "163.com"  # 发件箱的后缀
 
-        #mailto_list = ['mamingfeng007@gmail.com']
+        # mailto_list = ['mamingfeng007@gmail.com']
         #mail_host = "smtp.163.com"  # 设置服务器
         #mail_user = "mamingfeng007"  # 用户名
         #mail_pass = "crystal08"  # 口令
         #mail_postfix = "163.com"  # 发件箱的后缀
-    
+
 
     def send_mail(self, sub, content):
         me = "hello" + "<" + self.mail_user + "@" + self.mail_postfix + ">"
@@ -41,12 +41,9 @@ class Sendmail:
             return False
 
 
-
-
 if __name__ == '__main__':
 
-    mailto_list = [str(ReadWriteConfFile.getSectionValue("maillist","user"))]
-    #print("邮件列表 :" + mailto_list)
+    mailto_list = [str(ReadWriteConfFile.getSectionValue("maillist", "user"))]
     sendobj = Sendmail(mailto_list)
     if sendobj.send_mail("hello", "hello world python test"):
         print "发送成功"

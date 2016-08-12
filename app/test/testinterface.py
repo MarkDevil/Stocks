@@ -5,11 +5,10 @@ import requests
 import unittest
 
 params = {'mark1': 'val1', 'mark2': 'val2'}
-data = {'version': '', 'bizCode' : '','merchantCode':'','userId':''}
+data = {'version': '', 'bizCode': '', 'merchantCode': '', 'userId': ''}
 
 
 class mytest(unittest.TestCase):
-
     @unittest.skip("skip")
     def testGatewayParams(self):
         r = requests.get("http://localhost:5000/fgateway", params=params)

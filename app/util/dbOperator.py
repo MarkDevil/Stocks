@@ -54,7 +54,8 @@ class Mysql():
         cursor = db.cursor()
         cursor.execute(sql)
         data = cursor.fetchall()
-        print "result number " + str(len(data))
+        print ('data', isinstance(data, unicode))
+        print "result number " + str(list(data))
         return data
 
 
