@@ -21,7 +21,7 @@ class spyHousePrice():
 
 
 if __name__ == '__main__':
-    trendprice = r'<ul>.class=*byzs*'
+    trendprice = r'<ul>.class=*+byzs*+'
     spyobj = spyHousePrice(location="回龙观", url="http://esf.fang.com/house-a012/a21/", reg=trendprice)
     spyobj.getData()
 

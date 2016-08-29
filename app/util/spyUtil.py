@@ -19,15 +19,14 @@ class SpyUtils:
         self.header = {"User-Agent": user_agent}
 
     def requestheader(self):
-        # print self.header
         return self.header
 
     '''
         返回符合模式的数据
     '''
 
-    def getcontent(self, url, reg):
-        return re.findall(self.gethtml(url=url), reg)
+    def getcontent(self, reg, url):
+        return re.findall(reg, self.gethtml(url=url))
 
     def gethtml(self, url):
         request = urllib2.Request(url=url, headers=self.requestheader())
@@ -37,17 +36,20 @@ class SpyUtils:
         gzipped = response.headers.get('Content-Encoding')
         if gzipped:
             html = zlib.decompress(html, 16 + zlib.MAX_WBITS)
-        # print html
-        return html.decode('gbk').encode('utf-8')
+            return html
+        else:
+            return html
 
+    '''
+    获取指定页面数据
+    '''
 
-    def getelements(self, url):
+    def getelements(self, url, nodename, attrs=None, title=None, text=None):
         soup = BeautifulSoup(self.gethtml(url))
-        pricetrend = soup.findAll('ul', attrs={'class': 'byzs'})
+        pricetrend = soup.findAll(nodename, attrs=attrs, title=title, text=text)
         for i in pricetrend:
             print i
         return pricetrend
-        # print str(pricetrend)
 
 
     def cleanstr(self, str, partten):
