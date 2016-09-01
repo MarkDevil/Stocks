@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="4214671356">
+  <component name="DataSourceManagerImpl" format="xml" hash="1016230407">
     <data-source source="LOCAL" name="MySQL - @10.100.141.39" uuid="cf461d36-c97e-4e7d-b052-260ce303d259">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -8,6 +8,18 @@
       <jdbc-url>jdbc:mysql://10.100.141.39:3306</jdbc-url>
       <user-name>pay_trade</user-name>
       <user-password>dfdadfcbdfd3dff5dfdedfd8dfcbdfcedfcfdfeadf9bdf98df99</user-password>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="MySQL - @localhost" uuid="b05b435c-b19e-4ac5-af14-7b69836a96ab">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <user-name>root</user-name>
       <driver-properties>
         <property name="zeroDateTimeBehavior" value="convertToNull" />
         <property name="tinyInt1isBit" value="false" />

@@ -2,6 +2,7 @@
 import MySQLdb
 import logging
 from configUtil import ReadWriteConfFile
+import sqlalchemy
 
 __author__ = '201512010283'
 
@@ -20,7 +21,6 @@ def testMysql():
 
 
 class Mysql():
-
     host = ReadWriteConfFile.getSectionValue('db', 'host')
     user = ReadWriteConfFile.getSectionValue('db', 'user')
     passwd = ReadWriteConfFile.getSectionValue('db', 'passwd')
@@ -28,6 +28,7 @@ class Mysql():
 
     def __init__(self):
         pass
+
     @classmethod
     def getConn(cls):
         try:
@@ -37,14 +38,20 @@ class Mysql():
         except:
             print("create connection failed")
 
-
+    '''
+        插入数据如果主键冲突则打印信息
+    '''
     def insertData(self, sql):
         db = self.getConn()
         cursor = db.cursor()
         try:
             cursor.execute(sql)
-        except:
-            print ("insert failed")
+            db.commit()
+        except MySQLdb.IntegrityError:
+            print 'data is duplicate'
+        except Exception, e:
+            db.rollback()
+            raise e
         finally:
             if db:
                 db.close()
@@ -80,7 +87,24 @@ class Mysql():
                 db.rollback()
                 logging.info("execute sql failed")
 
+    '''
+        使用orm框架，创建数据库连接对象
+    '''
 
+    def getconn(self):
+        dbconfig = {'host': self.host,
+                    'user': self.user,
+                    'passwd': self.passwd,
+                    'db': 'test',
+                    'charset': 'utf-8'
+        }
+        return sqlalchemy.create_engine('mysql://%s:%s@%s/%s?charset=%s'
+                                        % (dbconfig['host'],
+                                           dbconfig['user'],
+                                           dbconfig['passwd'],
+                                           dbconfig['db'],
+                                           dbconfig['charset']
+        ))
 
 
 if __name__ == '__main__':
