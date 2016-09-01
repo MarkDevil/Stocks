@@ -15,29 +15,28 @@ class SpyPeopleWeb():
         spy = SpyUtils()
         retlist = spy.getelements(url="http://www.bjcyrc.gov.cn/tzgg/",
                                   nodename='a',
-                                  title=re.compile(r'.[\u4e00-\u9fa5]+.')
+                                  title=re.compile(r'[\u4e00-\u9fa5]+')
         )
 
         for ret in retlist:
-            print("Get data from 'www.bjcyrc.gov.cn' :", ret, len(retlist))
+            print("Get data from 'www.bjcyrc.gov.cn' :", ret)
             # self.cleanData(str(ret), r'[^[.[\u4e00-\u9fa5]+.]]')
-
-        # return len(retlist)
+            # return len(retlist)
 
     def cleanData(self, content, pattern):
         strinfo = re.sub(pattern=pattern, string=content, repl="")
         print ("After clean string ", strinfo)
 
+
+
     def start(self):
-        mytimer = Timer(10.0, SpyPeopleWeb().printhello())
+        mytimer = Timer(2.0, SpyPeopleWeb().parseUrl)
         mytimer.start()
 
 
     def printhello(self):
         print 'hello'
 
-
 if __name__ == '__main__':
 
-    mytimer = Timer(10.0, SpyPeopleWeb().printhello())
-    mytimer.start()
+    SpyPeopleWeb().start()

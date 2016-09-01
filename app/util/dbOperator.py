@@ -29,9 +29,9 @@ class Mysql():
     def __init__(self):
         pass
     @classmethod
-    def getConn(self):
+    def getConn(cls):
         try:
-            db = MySQLdb.connect(host=self.host, user=self.user, passwd=self.passwd, db=self.db,
+            db = MySQLdb.connect(host=cls.host, user=cls.user, passwd=cls.passwd, db=cls.db,
                                  charset='utf8')
             return db
         except:
