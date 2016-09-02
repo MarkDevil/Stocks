@@ -35,49 +35,59 @@ def getlianjiadata(pages):
                 continue
         houseInfos = soup.find_all('div', 'houseInfo')
         positionInfos = soup.find_all('div', 'positionInfo')
+
         # followInfos = soup.find_all('div', 'followInfo')
         # tagInfos = soup.find_all('div', 'tag')
         priceInfos = soup.find_all('div', 'totalPrice')
         for title, houseinfo, pos, priceInfo in zip(titles, houseInfos, positionInfos, priceInfos):
             rtitle = title.get_text()
-            rurl = fetchInfo(houseinfo=str(houseinfo), field='url')
+            rurl = fetchInfo(info=str(houseinfo), field='url')
             rhouseinfo = houseinfo.get_text()
             rpos = pos.get_text()
+            rregion = fetchInfo(info=rpos, field='region')
+            ryear = fetchInfo(info=rpos, field='year')
+            rfloor = fetchInfo(info=rpos, field='floor')
             rpriceInfo = priceInfo.get_text()
-            rbuilding = fetchInfo(houseinfo=rhouseinfo, field='building')
-            rstruct = fetchInfo(houseinfo=rhouseinfo, field='struct')
-            rsize = fetchInfo(houseinfo=rhouseinfo, field='size')
+            rbuilding = fetchInfo(info=rhouseinfo, field='building')
+            rstruct = fetchInfo(info=rhouseinfo, field='struct')
+            rsize = fetchInfo(info=rhouseinfo, field='size')
             count += 1
             print("[count]- {} - [house]-[title]：{} - [houseinfo]:{} - [posinfo]:{} - [price]:{} - {}"
                   .format(count, rtitle, rhouseinfo, rpos, rpriceInfo, rurl))
-            writedb(rtitle, rhouseinfo, rbuilding, rstruct, rsize, rpos, rpriceInfo, rurl)
+            writedb(rtitle, rhouseinfo, rbuilding, rstruct, rsize, rpos, rpriceInfo, rregion, ryear, rfloor, rurl)
     print(time.ctime())
 
 
-def writedb(title, houseinfo, building, struct, size, posinfo, price, url):
+def writedb(title, houseinfo, building, struct, size, posinfo, price, region, syear, floor, url):
     insertsql = "REPLACE INTO lianjia.house " \
-                "(title, houseinfo, posinfo,building, struct, housesize, price, url_addr) " \
-                "VALUES ('%s', '%s', '%s','%s','%s','%s', '%s', '%s');" % (
-                    title, houseinfo, posinfo, building, struct, size, price, url)
+                "(title, houseinfo, posinfo,building, struct, housesize, price,region,syear,floor, url_addr) " \
+                "VALUES ('%s', '%s', '%s','%s','%s','%s', '%s', '%s', '%s', '%s' ,'%s');" \
+                % (title, houseinfo, posinfo, building, struct, size, price, region, syear, floor, url)
     mysql.insertData(insertsql)
 
 
-def fetchInfo(houseinfo, field):
-    if houseinfo is None or field is None:
+def fetchInfo(info, field):
+    if info is None or field is None:
         raise Exception('input message is none')
 
     if field == 'building':
-        buildingreg = re.compile(r' | ').split(houseinfo).__getitem__(0)
+        buildingreg = re.compile(r' | ').split(info).__getitem__(0)
         return buildingreg
     elif field == 'struct':
-        structreg = re.compile(r' | ').split(houseinfo).__getitem__(2)
+        structreg = re.compile(r' | ').split(info).__getitem__(2)
         return structreg
     elif field == 'size':
-        sizereg = re.compile(r' | ').split(houseinfo).__getitem__(4)
+        sizereg = re.compile(r' | ').split(info).__getitem__(4)
         return sizereg
     elif field == 'url':
-        urlreg = re.findall(r"http.+\d+/", houseinfo).__getitem__(0)
+        urlreg = re.findall(r"http.+\d+/", info).__getitem__(0)
         return urlreg
+    elif field == 'floor':
+        return re.compile(r' ').split(info).__getitem__(0)
+    elif field == 'year':
+        return re.compile(r' ').split(info).__getitem__(2)
+    elif field == 'region':
+        return re.compile(r' ').split(info).__getitem__(6)
     else:
         return None
 
