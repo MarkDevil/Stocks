@@ -27,6 +27,10 @@ def index():
     sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
     return str(agentstocks).decode("utf-8")
 
+@app.route('/gethouse', methods=["GET", "POST"])
+def gethouse():
+    return "ok"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
