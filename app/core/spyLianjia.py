@@ -35,42 +35,49 @@ def getlianjiadata(pages):
                 continue
         houseInfos = soup.find_all('div', 'houseInfo')
         positionInfos = soup.find_all('div', 'positionInfo')
-        followInfos = soup.find_all('div', 'followInfo')
-        tagInfos = soup.find_all('div', 'tag')
+        # followInfos = soup.find_all('div', 'followInfo')
+        # tagInfos = soup.find_all('div', 'tag')
         priceInfos = soup.find_all('div', 'totalPrice')
         for title, houseinfo, pos, priceInfo in zip(titles, houseInfos, positionInfos, priceInfos):
             rtitle = title.get_text()
+            rurl = fetchInfo(houseinfo=str(houseinfo), field='url')
             rhouseinfo = houseinfo.get_text()
             rpos = pos.get_text()
             rpriceInfo = priceInfo.get_text()
             rbuilding = fetchInfo(houseinfo=rhouseinfo, field='building')
-            print rbuilding
+            rstruct = fetchInfo(houseinfo=rhouseinfo, field='struct')
+            rsize = fetchInfo(houseinfo=rhouseinfo, field='size')
             count += 1
-            print("[count]- {} - [house]-[title]：{} - [houseinfo]:{} - [posinfo]:{} - [price]:{}"
-                  .format(count, rtitle, rhouseinfo, rpos, rpriceInfo))
-            # writedb(rtitle, rhouseinfo, rpos, rpriceInfo)
+            print("[count]- {} - [house]-[title]：{} - [houseinfo]:{} - [posinfo]:{} - [price]:{} - {}"
+                  .format(count, rtitle, rhouseinfo, rpos, rpriceInfo, rurl))
+            writedb(rtitle, rhouseinfo, rbuilding, rstruct, rsize, rpos, rpriceInfo, rurl)
     print(time.ctime())
 
 
-def writedb(title, houseinfo, posinfo, price):
-    # INSERT INTO `lianjia`.`houseinfo` (`title`, `houseinfo`, `posinfo`, `price`) VALUES ('1', '1', '1', 1);
-    insertsql = "REPLACE INTO lianjia.house (title, houseinfo, posinfo, price) VALUES ('%s', '%s', '%s', '%s');" % (
-        title, houseinfo, posinfo, price)
-
+def writedb(title, houseinfo, building, struct, size, posinfo, price, url):
+    insertsql = "REPLACE INTO lianjia.house " \
+                "(title, houseinfo, posinfo,building, struct, housesize, price, url_addr) " \
+                "VALUES ('%s', '%s', '%s','%s','%s','%s', '%s', '%s');" % (
+                    title, houseinfo, posinfo, building, struct, size, price, url)
     mysql.insertData(insertsql)
 
 
 def fetchInfo(houseinfo, field):
-    buildingreg = re.compile(r'^[\u4e00-\u9fa5]+').search(houseinfo)
-    structreg = re.compile(r'\d[\u4e00-\u9fa5]\d[\u4e00-\u9fa5]').match(houseinfo)
-    sizereg = re.compile(r'\d{3}.\d[\u4e00-\u9fa5]{2}').match(houseinfo)
+    if houseinfo is None or field is None:
+        raise Exception('input message is none')
 
     if field == 'building':
-        return buildingreg.group(0)
+        buildingreg = re.compile(r' | ').split(houseinfo).__getitem__(0)
+        return buildingreg
     elif field == 'struct':
+        structreg = re.compile(r' | ').split(houseinfo).__getitem__(2)
         return structreg
     elif field == 'size':
+        sizereg = re.compile(r' | ').split(houseinfo).__getitem__(4)
         return sizereg
+    elif field == 'url':
+        urlreg = re.findall(r"http.+\d+/", houseinfo).__getitem__(0)
+        return urlreg
     else:
         return None
 
