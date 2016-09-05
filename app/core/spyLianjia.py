@@ -35,7 +35,6 @@ def getlianjiadata(pages):
                 continue
         houseInfos = soup.find_all('div', 'houseInfo')
         positionInfos = soup.find_all('div', 'positionInfo')
-
         # followInfos = soup.find_all('div', 'followInfo')
         # tagInfos = soup.find_all('div', 'tag')
         priceInfos = soup.find_all('div', 'totalPrice')
@@ -69,19 +68,14 @@ def writedb(title, houseinfo, building, struct, size, posinfo, price, region, sy
 def fetchInfo(info, field):
     if info is None or field is None:
         raise Exception('input message is none')
-
     if field == 'building':
-        buildingreg = re.compile(r' | ').split(info).__getitem__(0)
-        return buildingreg
+        return re.compile(r' | ').split(info).__getitem__(0)
     elif field == 'struct':
-        structreg = re.compile(r' | ').split(info).__getitem__(2)
-        return structreg
+        return re.compile(r' | ').split(info).__getitem__(2)
     elif field == 'size':
-        sizereg = re.compile(r' | ').split(info).__getitem__(4)
-        return sizereg
+        return re.compile(r' | ').split(info).__getitem__(4)
     elif field == 'url':
-        urlreg = re.findall(r"http.+\d+/", info).__getitem__(0)
-        return urlreg
+        return re.findall(r"http.+\d+/", info).__getitem__(0)
     elif field == 'floor':
         return re.compile(r' ').split(info).__getitem__(0)
     elif field == 'year':

@@ -1,8 +1,10 @@
 # coding=utf-8
 import MySQLdb
 import logging
+from app.Mapper.lianjiaMapper import *
 from configUtil import ReadWriteConfFile
 import sqlalchemy
+from sqlalchemy.orm import sessionmaker
 
 __author__ = '201512010283'
 
@@ -41,6 +43,7 @@ class Mysql():
     '''
         插入数据如果主键冲突则打印信息
     '''
+
     def insertData(self, sql):
         db = self.getConn()
         cursor = db.cursor()
@@ -91,26 +94,60 @@ class Mysql():
         使用orm框架，创建数据库连接对象
     '''
 
-    def getconn(self):
+    def getEngine(self):
         dbconfig = {'host': self.host,
                     'user': self.user,
                     'passwd': self.passwd,
-                    'db': 'test',
-                    'charset': 'utf-8'
+                    'db': self.db,
+                    'charset': 'utf8'
         }
-        return sqlalchemy.create_engine('mysql://%s:%s@%s/%s?charset=%s'
-                                        % (dbconfig['host'],
-                                           dbconfig['user'],
+        return sqlalchemy.create_engine('mysql+mysqldb://%s:%s@%s/%s?charset=%s'
+                                        % (dbconfig['user'],
                                            dbconfig['passwd'],
+                                           dbconfig['host'],
                                            dbconfig['db'],
                                            dbconfig['charset']
         ))
+        # return sqlalchemy.create_engine('mysql+mysqldb://root:123@localhost:3306/testuser')
+
+    '''
+        返回数据库会话
+    '''
+
+    def getSession(self):
+        DBsession = sessionmaker(bind=self.getEngine())
+        session = DBsession()
+        return session
+
+
+    def findall(self, clsname, **kwargs):
+        if clsname is None or kwargs is None:
+            raise Exception('Search parameter is incorrect !')
+        session = self.getSession()
+        retlist = session.query(clsname).filter_by(**kwargs).all()
+        self.printlist(retlist)
+        return retlist
+
+    def printlist(self, inlist):
+        for i in inlist:
+            for key, value in i.__dict__.items():
+                print key, value
 
 
 if __name__ == '__main__':
     mysql = Mysql()
-    datas = mysql.querydata(mysql.getConn(), "SELECT * from pay_financial.bank_account")
-    logging.info(datas)
+    session = mysql.getSession()
+    # tuser = User(id='1', title='马铭锋')
+    # session.add(tuser)
+    # session.commit()
+    lianjia = session.query(Lianjia).filter_by(region='回龙观').all()
+    for i in lianjia:
+        for key, value in i.__dict__.items():
+            print key, value
+        print '\n'
+
+    mysql.findall(Lianjia, region='霍营')
+
 
 
 
