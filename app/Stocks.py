@@ -1,17 +1,23 @@
 # coding=utf-8
 from flask import Flask, request
+from app.core import spyLianjia
 
 from app.core.stocks import Stocks
 from app.util.emailUtil import Sendmail
 from app.util.configUtil import ReadWriteConfFile
-import time
+from app.util.dbOperator import Mysql
+from app.Mapper.lianjiaMapper import *
+
 
 
 app = Flask(__name__)
 
+
+
 maillist = [ReadWriteConfFile.getSectionValue('maillist', 'user')]
 sendobj = Sendmail(mailto_list=maillist)
 subjectTitle = '股票机构买入榜单'
+
 
 
 @app.route('/fgateway', methods=["GET", "POST"])
@@ -29,7 +35,10 @@ def index():
 
 @app.route('/gethouse', methods=["GET", "POST"])
 def gethouse():
-    return "ok"
+    mysql = Mysql()
+    dbsession = mysql.getSession()
+    list = dbsession.query(Lianjia).filter_by(region='回龙观').all()
+    return list
 
 
 if __name__ == '__main__':

@@ -145,7 +145,6 @@ if __name__ == '__main__':
         for key, value in i.__dict__.items():
             print key, value
         print '\n'
-
     mysql.findall(Lianjia, region='霍营')
 
 
