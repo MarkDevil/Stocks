@@ -1,8 +1,8 @@
-from sys import stdin, stdout, stderr
-
 __author__ = 'mingfengma'
 
 import paramiko
+import time
+import schedule
 
 HOSTS = ['10.100.142.117']
 PORT = 2222
@@ -26,6 +26,9 @@ def checkTomcatStatus():
     ssh.close()
     return fd
 
+schedule.every(10).seconds.do(checkTomcatStatus)
 
 if __name__ == '__main__':
-    print checkTomcatStatus()
+    while 1:
+        schedule.run_pending()
+        time.sleep(10)
