@@ -12,17 +12,20 @@ import urllib2
 import time
 from bs4 import BeautifulSoup
 from app.util.dbOperator import Mysql
+from app.util.Workers import Worker, WorkManager
 
 
 mysql = Mysql()
 conn = Mysql.getConn()
+wm = WorkManager()
 
 
 def getlianjiadata(pages):
     count = 0
     print time.ctime()
-    for i in range(pages):
+    for i in range(0, pages):
         url = 'http://bj.lianjia.com/ershoufang/pg' + str(i) + '/'
+        print 'starting parse page : ', str(i)
         page = urllib2.urlopen(url, timeout=50)
         soup = BeautifulSoup(page, "lxml")
 
@@ -54,6 +57,7 @@ def getlianjiadata(pages):
             print("[count]- {} - [house]-[title]：{} - [houseinfo]:{} - [posinfo]:{} - [price]:{} - {}"
                   .format(count, rtitle, rhouseinfo, rpos, rpriceInfo, rurl))
             writedb(rtitle, rhouseinfo, rbuilding, rstruct, rsize, rpos, rpriceInfo, rregion, ryear, rfloor, rurl)
+
     print(time.ctime())
 
 
@@ -87,4 +91,4 @@ def fetchInfo(info, field):
 
 
 if __name__ == '__main__':
-    getlianjiadata(pages=100)
+    getlianjiadata(pages=200)

@@ -28,6 +28,9 @@ class SpyUtils:
     def getcontent(self, reg, url):
         return re.findall(reg, self.gethtml(url=url))
 
+    '''
+        获取页面元素
+    '''
     def gethtml(self, url):
         request = urllib2.Request(url=url, headers=self.requestheader())
         request.add_header('Accept-encoding', 'gzip')
