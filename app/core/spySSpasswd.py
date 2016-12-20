@@ -22,7 +22,6 @@ def getSSpasswd(url):
             f.writelines(cont)
             f.writelines("\n")
         f.close()
-        return
 
 
 if __name__ == '__main__':
