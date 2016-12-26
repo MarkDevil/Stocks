@@ -14,7 +14,6 @@ from bs4 import BeautifulSoup
 from app.util.dbOperator import Mysql
 from app.util.Workers import Worker, WorkManager
 
-
 mysql = Mysql()
 conn = Mysql.getConn()
 wm = WorkManager()
@@ -33,7 +32,7 @@ def getlianjiadata(pages):
         for m in titles:
             if (m.get_text() == '筛选：') or (m.get_text() == '用户登录还没有链家网账号？马上注册'):
                 titles.remove(m)
-                print 'delete invaid data :', m.get_text()
+                print 'delete invaild data :', m.get_text()
             else:
                 continue
         houseInfos = soup.find_all('div', 'houseInfo')

@@ -59,7 +59,6 @@ class Mysql():
             if db:
                 db.close()
 
-
     def querydata(self, db, sql):
         cursor = db.cursor()
         cursor.execute(sql)
@@ -68,7 +67,6 @@ class Mysql():
         print "result number " + str(list(data))
         return data
 
-
     def printall(self, datas):
         print "Data number :" + str(len(datas))
         if len(datas) == 1:
@@ -76,7 +74,6 @@ class Mysql():
         else:
             for data in datas:
                 print data
-
 
     def readsql(self, db, cursor):
         for line in open('src/sql/insertuser.sql', 'r'):
@@ -100,14 +97,14 @@ class Mysql():
                     'passwd': self.passwd,
                     'db': self.db,
                     'charset': 'utf8'
-        }
+                    }
         return sqlalchemy.create_engine('mysql+mysqldb://%s:%s@%s/%s?charset=%s'
                                         % (dbconfig['user'],
                                            dbconfig['passwd'],
                                            dbconfig['host'],
                                            dbconfig['db'],
                                            dbconfig['charset']
-        ))
+                                           ))
         # return sqlalchemy.create_engine('mysql+mysqldb://root:123@localhost:3306/testuser')
 
     '''
@@ -118,7 +115,6 @@ class Mysql():
         DBsession = sessionmaker(bind=self.getEngine())
         session = DBsession()
         return session
-
 
     def findall(self, clsname, **kwargs):
         if clsname is None or kwargs is None:
@@ -146,7 +142,3 @@ if __name__ == '__main__':
             print key, value
         print '\n'
     mysql.findall(Lianjia, region='霍营')
-
-
-
-

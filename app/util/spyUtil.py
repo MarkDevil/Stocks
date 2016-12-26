@@ -31,10 +31,13 @@ class SpyUtils:
     '''
         获取页面元素
     '''
+
     def gethtml(self, url):
         request = urllib2.Request(url=url, headers=self.requestheader())
         request.add_header('Accept-encoding', 'gzip')
-        response = urllib2.urlopen(request)
+
+        response = urllib2.urlopen(request,
+                                   timeout=5)
         html = response.read()
         gzipped = response.headers.get('Content-Encoding')
         if gzipped:
@@ -54,7 +57,6 @@ class SpyUtils:
             print i
         return pricetrend
 
-
     def cleanstr(self, str, partten):
         reg = re.search(partten, str)
         if reg:
@@ -67,6 +69,3 @@ if __name__ == '__main__':
     numParten = r'\d+.\d+'
     rest = SpyUtils().getelements("http://esf.fang.com/house-a012-b01182")
     print SpyUtils().cleanstr(str(rest), numParten)
-
-
-
