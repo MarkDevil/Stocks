@@ -1,14 +1,10 @@
 # coding=utf-8
 from flask import Flask, request
-from app.core import spyLianjia
-
-from app.core.stocks import Stocks
-from app.util.emailUtil import Sendmail
-from app.util.configUtil import ReadWriteConfFile
-from app.util.dbOperator import Mysql
-from app.Mapper.lianjiaMapper import *
 from flask import json
 
+from app.core.stocks import Stocks
+from app.util.configUtil import ReadWriteConfFile
+from app.util.emailUtil import Sendmail
 
 app = Flask(__name__)
 
@@ -32,12 +28,12 @@ def index():
     return str(agentstocks).decode("utf-8").format()
 
 
-@app.route('/gethouse', methods=["GET", "POST"])
-def gethouse():
-    mysql = Mysql()
-    dbsession = mysql.getSession()
-    list = dbsession.query(Lianjia).filter_by(region='回龙观').all()
-    return list
+# @app.route('/gethouse', methods=["GET", "POST"])
+# def gethouse():
+#     mysql = Mysql()
+#     dbsession = mysql.getSession()
+#     list = dbsession.query(Lianjia).filter_by(region='回龙观').all()
+#     return list
 
 
 if __name__ == '__main__':

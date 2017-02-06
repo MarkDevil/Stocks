@@ -12,8 +12,8 @@ class Stocks:
         df = ts.inst_tops(10)
         df.sort_values(by='bcount')
 
-        print df[(df.net) > 10000]
-        return df[(df.net) > 10000]
+        print df[(df.net) > 8000]
+        return df[(df.net) > 8000]
 
 
     # 获取分红信息

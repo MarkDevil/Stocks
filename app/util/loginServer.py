@@ -25,9 +25,9 @@ def ssh2Server(ip, port, passwd, username, cmd):
 
 
 if __name__ == '__main__':
-    servers = ['10.100.142.117']
+    servers = ['10.100.142.118']
     cmd = ['cd /app/', 'pwd']
     for i in servers:
         print '%s' % i
-        t = threading.Thread(target=ssh2Server, args=[i, 2222, 'yxgly', 'azc1rx', cmd])
+        t = threading.Thread(target=ssh2Server, args=[i, 2222, 'yxgly', 'yx10years', cmd])
         t.start()

@@ -12,7 +12,7 @@ __author__ = '201512010283'
 def testMysql():
     db = MySQLdb.connect("10.100.141.39", "pay_trade", "pay_trade@123", "pay_trade")
     if db:
-        print "create Database connection successfully"
+        print "init Database connection successfully"
         cursor = db.cursor()
         cursor.execute("SELECT * from pay_point.mall_order where merchant_code = 'MX_TOUMI'")
         data = cursor.fetchone()
