@@ -10,12 +10,13 @@ class Stocks:
     '''
         机构净买入量最大的公司
     '''
+
     def findAgent(self):
         df = ts.inst_tops(10)
         df.sort_values(by='bamount')
 
-        print df[df.net > 0]
-        return df[(df.net) > 8000]
+        print df[df.net > 5000]
+        return df[(df.net) > 5000]
 
 
     '''

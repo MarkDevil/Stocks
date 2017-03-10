@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask import json
 
 from app.core.stocks import Stocks
@@ -35,13 +35,20 @@ def index():
 def getnews():
     news = Stocks().getlastedNews()
     print news
-    return str(news).decode("utf-8").format()
+    retmsg = str(news).decode("utf-8").format()
+    return render_template("main.html", stocks=retmsg)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return "page not found"
+
 
 # @app.route('/gethouse', methods=["GET", "POST"])
 # def gethouse():
 # mysql = Mysql()
-#     dbsession = mysql.getSession()
-#     list = dbsession.query(Lianjia).filter_by(region='回龙观').all()
+# dbsession = mysql.getSession()
+# list = dbsession.query(Lianjia).filter_by(region='回龙观').all()
 #     return list
 
 
