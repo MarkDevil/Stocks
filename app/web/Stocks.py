@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask import json
 from flask import render_template
 
@@ -7,11 +7,13 @@ from app.core.stocks import Stocks
 from app.util.configUtil import ReadWriteConfFile
 from app.util.emailUtil import Sendmail
 
+
 app = Flask(__name__)
 
 maillist = [ReadWriteConfFile.getSectionValue('maillist', 'user')]
 sendobj = Sendmail(mailto_list=maillist)
 subjectTitle = '股票机构买入榜单'
+profitTitle = '公司分红'
 
 
 @app.route('/fgateway', methods=["GET", "POST"])
@@ -25,10 +27,26 @@ def fgateway():
 @app.route('/getstocks')
 def index():
     agentstocks = Stocks().findAgent()
+    sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
+    profitStocks = Stocks().getProfit(2016)
+    return str(agentstocks).decode("utf-8").format()
     # sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
     # return str(agentstocks).decode("utf-8").format()
     ret_msg = str(agentstocks).decode("utf-8").format()
     return render_template('StocksPage.html', ret_msg=ret_msg)
+
+
+@app.route('/getNews')
+def getnews():
+    news = Stocks().getlastedNews()
+    print news
+    retmsg = str(news).decode("utf-8").format()
+    return render_template("main.html", stocks=retmsg)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return "page not found"
 
 
 # @app.route('/gethouse', methods=["GET", "POST"])
