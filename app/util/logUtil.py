@@ -3,18 +3,29 @@ __author__ = '201512010283'
 import logging
 
 
-def initlog():
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s : %(message)s',
-                        datefmt='%a, %d %b %Y %H:%M:%S',
-                        filename='E:\\PycharmProjects\\Stocks\\app\\logs',
-                        filemode='a')
-    _logger1 = logging.getLogger("log")
-    if _logger1:
-        return _logger1
-    else:
-        return None
+class Log:
+    def __init__(self, level):
+        self.format = '%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s : %(message)s'
+        self.datefmt = '%a, %d %b %Y %H:%M:%S'
+        if level == "info":
+            self.loglevel = logging.INFO
+        elif level == "debug":
+            self.loglevel = logging.DEBUG
+        elif level == "warn":
+            self.loglevel = logging.WARN
+        else:
+            self.loglevel = logging.INFO
+
+    def initlogger(self):
+        logging.basicConfig(
+            level=self.loglevel,
+            format=self.format,
+            datefmt=self.datefmt,
+        )
+        return logging.getLogger()
 
 
 if __name__ == '__main__':
-    initlog().log("info", "mark")
+    logger = Log("debug").initlogger()
+    logger.info("mark test")
+    logger.debug("mark test")

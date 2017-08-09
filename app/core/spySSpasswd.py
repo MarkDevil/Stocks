@@ -21,8 +21,8 @@ def getSSpasswd(url):
             cont = [retlist[num], '\t', portlist[num], '\t', passwdlist[num]]
             f.writelines(cont)
             f.writelines("\n")
-        f.close()
+            f.close()
 
 
 if __name__ == '__main__':
-    getSSpasswd("https://www.ishadowsocks.biz/#free")
+    getSSpasswd("http://free.ishadow.online/")

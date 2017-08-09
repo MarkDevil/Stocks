@@ -136,6 +136,7 @@ if __name__ == '__main__':
     # tuser = User(id='1', title='马铭锋')
     # session.add(tuser)
     # session.commit()
+    mysql.
     lianjia = session.query(Lianjia).filter_by(region='回龙观').all()
     for i in lianjia:
         for key, value in i.__dict__.items():

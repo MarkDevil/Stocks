@@ -52,10 +52,10 @@ class SpyUtils:
 
     def getelements(self, url, nodename, attrs=None, title=None, text=None):
         soup = BeautifulSoup(self.gethtml(url))
-        pricetrend = soup.findAll(nodename, attrs=attrs, title=title, text=text)
-        for i in pricetrend:
+        eles = soup.findAll(nodename, attrs=attrs, title=title, text=text)
+        for i in eles:
             print i
-        return pricetrend
+        return eles
 
     def cleanstr(self, str, partten):
         reg = re.search(partten, str)

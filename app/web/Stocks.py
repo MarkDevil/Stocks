@@ -1,6 +1,7 @@
 # coding=utf-8
 from flask import Flask, request
 from flask import json
+from flask import render_template
 
 from app.core.stocks import Stocks
 from app.util.configUtil import ReadWriteConfFile
@@ -24,8 +25,10 @@ def fgateway():
 @app.route('/getstocks')
 def index():
     agentstocks = Stocks().findAgent()
-    sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
-    return str(agentstocks).decode("utf-8").format()
+    # sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
+    # return str(agentstocks).decode("utf-8").format()
+    ret_msg = str(agentstocks).decode("utf-8").format()
+    return render_template('StocksPage.html', ret_msg=ret_msg)
 
 
 # @app.route('/gethouse', methods=["GET", "POST"])
