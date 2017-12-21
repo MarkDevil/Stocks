@@ -1,4 +1,4 @@
-#coding = utf-8
+# coding = utf-8
 __author__ = 'mingfengma'
 
 import Queue
@@ -24,8 +24,9 @@ class Worker(threading.Thread):
             except Queue.Empty:
                 break
 
+
 class WorkManager:
-    def __init__(self, num_of_workers = 10):
+    def __init__(self, num_of_workers=10):
         self.workQueue = Queue.Queue()
         self.resultQueue = Queue.Queue()
         self.workers = []
@@ -55,8 +56,10 @@ class WorkManager:
     def get_result(self, *args, **kwargs):
         return self.resultQueue.get(args, kwargs)
 
+
 def download_file(url):
     print requests.get(url).text
+
 
 def main():
     try:
@@ -72,12 +75,10 @@ def main():
     wm.waitforfinish()
     print time.time() - _start_time
 
+
 def runlianjia():
     wm = WorkManager(10)
 
 
 if __name__ == '__main__':
     main()
-
-
-

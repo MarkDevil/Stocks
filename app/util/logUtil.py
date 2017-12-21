@@ -20,7 +20,7 @@ class Log:
         logging.basicConfig(
             level=self.loglevel,
             format=self.format,
-            datefmt=self.datefmt,
+            datefmt=self.datefmt
         )
         return logging.getLogger()
 

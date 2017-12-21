@@ -22,8 +22,8 @@ class Lianjia(Base):
     houseinfo = Column(String(length=50))
     posinfo = Column(String(length=50))
 
-class User(Base):
 
+class User(Base):
     __tablename__ = 'tuser'
 
     id = Column(Integer, primary_key=True)
