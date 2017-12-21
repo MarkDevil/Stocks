@@ -31,4 +31,4 @@ class ExcelUtils:
 
 
 if __name__ == '__main__':
-    ExcelUtils.readexcel('/Users/mark/Desktop/随手记贷后需求/随手记测算表-20171212终稿.xlsx', sheetname='test2')
+    ExcelUtils.readexcel('xls', sheetname='test2')
