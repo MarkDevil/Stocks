@@ -14,7 +14,7 @@ class ExcelUtils:
 
     def gendata(self, colname, rowdata):
         retmap = map(None, colname, rowdata)
-        print  dict(retmap)
+        print dict(retmap)
 
     @staticmethod
     def readexcel(filename, sheetname):

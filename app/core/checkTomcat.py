@@ -1,13 +1,11 @@
 __author__ = 'mingfengma'
 
 import paramiko
-import time
-import schedule
 
-HOSTS = ['10.100.142.117']
-PORT = 2222
-USER = 'yxgly'
-PASSWD = 'azc1rx'
+HOSTS = ['192.168.18.45']
+PORT = 22
+USER = 'root'
+PASSWD = 'qwe123ASD()'
 
 
 def checkTomcatStatus():
@@ -16,7 +14,7 @@ def checkTomcatStatus():
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     for host in HOSTS:
         ssh.connect(host, PORT, USER, PASSWD)
-        stdin, stdout, stderr = ssh.exec_command('ps -ef | grep tomcat-financial | grep -v grep | awk \'{print $2}\'')
+        stdin, stdout, stderr = ssh.exec_command('ps -ef | grep hbadmin | grep -v grep | awk \'{print $2}\'')
         data = stdout.read()
         print data
         if data is not None:
@@ -24,11 +22,12 @@ def checkTomcatStatus():
         else:
             fd[host] = 'bad'
     ssh.close()
+    print fd
     return fd
 
-schedule.every(10).seconds.do(checkTomcatStatus)
+
+
+
 
 if __name__ == '__main__':
-    while 1:
-        schedule.run_pending()
-        time.sleep(10)
+    checkTomcatStatus()
