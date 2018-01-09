@@ -26,6 +26,6 @@ class Log:
 
 
 if __name__ == '__main__':
-    logger = Log("debug").initlogger()
+    logger = Log("info").initlogger()
     logger.info("mark test")
     logger.debug("mark test")
