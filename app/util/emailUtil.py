@@ -8,7 +8,7 @@ from app.util.configUtil import ReadWriteConfFile
 __author__ = '201512010283'
 
 
-class Sendmail:
+class Sendmail():
     def __init__(self, mailto_list):
         self.mailto_list = mailto_list
         self.mail_host = "smtp.163.com"  # 设置服务器

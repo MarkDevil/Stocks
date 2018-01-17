@@ -25,4 +25,4 @@ def startftpServer(concurrytype):
 
 
 if __name__ == "__main__":
-    startftpServer('thread')
+    startftpServer(concurrytype='thread')
