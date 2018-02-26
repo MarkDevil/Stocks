@@ -3,6 +3,8 @@ __author__ = '201512010283'
 
 import requests
 import unittest
+from app.core.celerytask import *
+
 
 params = {'mark1': 'val1', 'mark2': 'val2'}
 data = {'version': '', 'bizCode': '', 'merchantCode': '', 'userId': ''}
@@ -14,10 +16,9 @@ class mytest(unittest.TestCase):
         r = requests.get("http://localhost:5000/fgateway", params=params)
         print r.url + '\t'
 
-    def testPostWithData(self):
-        r = requests.post("http://10.100.142.117:22223/financial-web/api/queryLoan",
-                          data=data)
-        print r._content
+
+    def testcelerytask(self):
+        checkTomcat.delay()
 
 
 if __name__ == '__main__':

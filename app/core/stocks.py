@@ -17,9 +17,6 @@ class Stocks:
 
         print df[df.net > 5000]
         return df[(df.net) > 5000]
-        print df[(df.net) > 5000]
-        return df[(df.net) > 5000]
-
 
     '''
         公司分红报告

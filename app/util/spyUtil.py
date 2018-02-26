@@ -6,6 +6,7 @@ import urllib2
 import json
 from BeautifulSoup import BeautifulSoup
 import zlib
+import requests
 
 
 class SpyUtils:
@@ -32,29 +33,40 @@ class SpyUtils:
         获取页面元素
     '''
 
-    def gethtml(self, url):
-        request = urllib2.Request(url=url, headers=self.requestheader())
-        request.add_header('Accept-encoding', 'gzip')
+    # def gethtml(self, url):
+    #
+    #     request = urllib2.Request(url=url, headers=self.requestheader())
+    #     request.add_header('Accept-encoding', 'gzip')
+    #
+    #     response = urllib2.urlopen(request,
+    #                                timeout=5)
+    #     html = response.read()
+    #     gzipped = response.headers.get('Content-Encoding')
+    #     if gzipped:
+    #         html = zlib.decompress(html, 16 + zlib.MAX_WBITS)
+    #         return html
+    #     else:
+    #         return html
 
-        response = urllib2.urlopen(request,
-                                   timeout=5)
-        html = response.read()
-        gzipped = response.headers.get('Content-Encoding')
-        if gzipped:
-            html = zlib.decompress(html, 16 + zlib.MAX_WBITS)
-            return html
-        else:
-            return html
+    '''
+        requests get
+    '''
+
+    def gethtml(self, url):
+        response = requests.get(url=url, headers=self.requestheader())
+        html = response.content
+        return html
 
     '''
     获取指定页面数据
     '''
 
-    def getelements(self, url, nodename, attrs=None, title=None, text=None):
+    def getelements(self, url, nodename, attrs=None):
+        # type: (object, object, object, object, object) -> object
         soup = BeautifulSoup(self.gethtml(url))
-        eles = soup.findAll(nodename, attrs=attrs, title=title, text=text)
-        for i in eles:
-            print i
+        # print(soup)
+        eles = soup.findAll(nodename, attrs=attrs)
+        print(eles)
         return eles
 
     def cleanstr(self, str, partten):
@@ -68,4 +80,4 @@ class SpyUtils:
 if __name__ == '__main__':
     numParten = r'\d+.\d+'
     rest = SpyUtils().getelements("http://esf.fang.com/house-a012-b01182")
-    print SpyUtils().cleanstr(str(rest), numParten)
+    # print SpyUtils().cleanstr(str(rest), numParten)

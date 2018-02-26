@@ -10,7 +10,6 @@ if os.path.exists('.env'):
             os.environ[var[0]] = var[1]
 from flask.ext.script import Manager, Shell
 # 通过配置创建 app
-app = stocks()
 manager = Manager(app)
 
 
