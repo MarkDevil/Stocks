@@ -2,11 +2,8 @@
 __author__ = 'mingfengma'
 
 import re
-import urllib2
-import json
-from BeautifulSoup import BeautifulSoup
-import zlib
 import requests
+from BeautifulSoup import BeautifulSoup
 
 
 class SpyUtils:
@@ -58,16 +55,18 @@ class SpyUtils:
         return html
 
     '''
-    获取指定页面数据
+        获取指定页面数据
     '''
 
     def getelements(self, url, nodename, attrs=None):
-        # type: (object, object, object, object, object) -> object
         soup = BeautifulSoup(self.gethtml(url))
         # print(soup)
         eles = soup.findAll(nodename, attrs=attrs)
         print(eles)
         return eles
+
+    def get(self, url):
+        return requests.get(url, timeout=3).content
 
     def cleanstr(self, str, partten):
         reg = re.search(partten, str)
@@ -75,9 +74,15 @@ class SpyUtils:
             return reg.group()
         else:
             return None
+    '''
+        清理页面只保留body部分
+    '''
+    def cleanpage(self, page):
+        rets = re.findall(r'<*body>.+<*/body>', page)
+        return str(rets)
 
 
 if __name__ == '__main__':
     numParten = r'\d+.\d+'
-    rest = SpyUtils().getelements("http://esf.fang.com/house-a012-b01182")
+    # rest = SpyUtils().getelements("http://esf.fang.com/house-a012-b01182")
     # print SpyUtils().cleanstr(str(rest), numParten)

@@ -48,7 +48,7 @@ class WorkManager:
             if worker.isAlive() and not self.workQueue.empty():
                 self.workers.append(worker)
 
-        print 'all jobs finished '
+        print ('all jobs finished ')
 
     def add_job(self, callable, *args, **kwds):
         self.workQueue.put((callable, args, kwds))
@@ -58,7 +58,7 @@ class WorkManager:
 
 
 def download_file(url):
-    print requests.get(url).text
+    print (requests.get(url).text)
 
 
 def main():
@@ -73,7 +73,7 @@ def main():
         wm.add_job(download_file, i)
     wm.start()
     wm.waitforfinish()
-    print time.time() - _start_time
+    print (time.time() - _start_time)
 
 
 def runlianjia():

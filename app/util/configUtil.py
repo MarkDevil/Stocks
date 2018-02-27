@@ -50,4 +50,4 @@ if __name__ == '__main__':
     # ReadWriteConfFile.addSection('messages')
     # ReadWriteConfFile.setSectionValue('messages', 'name', 'sophia')
     x = ReadWriteConfFile.getSectionValue('maillist', 'user')
-    print x
+    print (x)

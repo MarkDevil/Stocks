@@ -1,6 +1,7 @@
 # coding=utf-8
 
-from celerytask import sendmail,checkTomcat
+from celerytask import *
+
 
 def checkjob():
     checkTomcat.delay()

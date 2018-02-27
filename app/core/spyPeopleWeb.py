@@ -34,9 +34,6 @@ class SpyPeopleWeb():
         mytimer.start()
 
 
-    def printhello(self):
-        print 'hello'
-
 if __name__ == '__main__':
 
     SpyPeopleWeb().start()

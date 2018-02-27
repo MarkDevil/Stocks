@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+    </style>
+{% endblock %}
+
+{% block body %}
+    <thead style="font-size: 20px">
+       bj-test:192.168.18.45 监控页面
+    </thead>
+    <br>
+
+    {% for foo in retmsg %}
+        <th>{{ foo }} :{{ retmsg[foo]}}</th>
+        <br>
+    {% endfor %}
+
+
+
+{% endblock %}
+

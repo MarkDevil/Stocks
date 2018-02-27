@@ -11,18 +11,13 @@ class spyHousePrice():
         self.url = url
         self.reg = reg
 
-
     def getData(self):
         spyutils = SpyUtils()
         ret = spyutils.getcontent(url=self.url, reg=self.reg)
-        print ret
-
-
+        print (ret)
 
 
 if __name__ == '__main__':
     trendprice = r'<ul>.class=*+byzs*+'
     spyobj = spyHousePrice(location="回龙观", url="http://esf.fang.com/house-a012/a21/", reg=trendprice)
     spyobj.getData()
-
-

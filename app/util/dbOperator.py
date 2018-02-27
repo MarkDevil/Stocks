@@ -12,23 +12,24 @@ __author__ = '201512010283'
 def testMysql():
     db = MySQLdb.connect("10.100.141.39", "pay_trade", "pay_trade@123", "pay_trade")
     if db:
-        print "init Database connection successfully"
+        print ("init Database connection successfully")
         cursor = db.cursor()
         cursor.execute("SELECT * from pay_point.mall_order where merchant_code = 'MX_TOUMI'")
         data = cursor.fetchone()
-        print str(data)
+        print (str(data))
         db.close()
     else:
-        print "create connection failed"
+        print ("create connection failed")
 
 
-class Mysql():
+class Mysql:
     host = ReadWriteConfFile.getSectionValue('db', 'host')
     user = ReadWriteConfFile.getSectionValue('db', 'user')
     passwd = ReadWriteConfFile.getSectionValue('db', 'passwd')
     db = ReadWriteConfFile.getSectionValue('db', 'dbname')
 
     def __init__(self):
+        # type: () -> object
         pass
 
     @classmethod
@@ -51,10 +52,7 @@ class Mysql():
             cursor.execute(sql)
             db.commit()
         except MySQLdb.IntegrityError:
-            print 'data is duplicate'
-        except Exception, e:
-            db.rollback()
-            raise e
+            print ('data is duplicate')
         finally:
             if db:
                 db.close()
@@ -64,16 +62,16 @@ class Mysql():
         cursor.execute(sql)
         data = cursor.fetchall()
         print ('data', isinstance(data, unicode))
-        print "result number " + str(list(data))
+        print ("result number " + str(list(data)))
         return data
 
     def printall(self, datas):
-        print "Data number :" + str(len(datas))
+        print ("Data number :" + str(len(datas)))
         if len(datas) == 1:
-            print datas
+            print (datas)
         else:
             for data in datas:
-                print data
+                print (data)
 
     def readsql(self, db, cursor):
         for line in open('src/sql/insertuser.sql', 'r'):
@@ -127,7 +125,7 @@ class Mysql():
     def printlist(self, inlist):
         for i in inlist:
             for key, value in i.__dict__.items():
-                print key, value
+                print (key, value)
 
 
 if __name__ == '__main__':
@@ -139,6 +137,6 @@ if __name__ == '__main__':
     lianjia = session.query(Lianjia).filter_by(region='回龙观').all()
     for i in lianjia:
         for key, value in i.__dict__.items():
-            print key, value
-        print '\n'
+            print (key, value)
+        print ('\n')
     mysql.findall(Lianjia, region='霍营')

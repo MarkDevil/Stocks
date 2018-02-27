@@ -24,20 +24,20 @@ class MyCrawler:
         while self.current_deepth <= crawl_depth:
             while not self.linkQuence.unVistedUrlsIsempty():
                 vistUrl = self.linkQuence.unVistedUrlDeQueue()
-                print "Pop out one url \"%s\" from unvisited url list" % vistUrl
+                print ("Pop out one url \"%s\" from unvisited url list" % vistUrl)
                 if vistUrl is None or vistUrl == "":
                     continue
 
                 links = self.getHyperLinks(vistUrl)
-                print "Get %d new links" % len(links)
+                print ("Get %d new links" % len(links))
 
                 self.linkQuence.addVistedUrl(vistUrl)
-                print "Visited url count: " + str(self.linkQuence.getVistedUrlCount())
-                print "Visited deepth: " + str(self.current_deepth)
+                print ("Visited url count: " + str(self.linkQuence.getVistedUrlCount()))
+                print ("Visited deepth: " + str(self.current_deepth))
 
             for link in links:
                 self.linkQuence.addUnvistedUrl(link)
-            print "%d unvisited links:" % len(self.linkQuence.getUnVistedUrl())
+            print ("%d unvisited links:" % len(self.linkQuence.getUnVistedUrl()))
             self.current_deepth += 1
 
     '''
@@ -62,22 +62,20 @@ class MyCrawler:
         获取页面的源码
     '''
     def getPageSource(self, url, timeout=100):
-        try:
-            socket.setdefaulttimeout(timeout)
-            req = urllib2.Request(url)
-            req.add_header('User-agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)')
-            response = urllib2.urlopen(req)
-            # print response
-            page = ''
-            if response.headers.get('Content-Encoding') == 'gzip':
-                page = zlib.decompress(page, 16 + zlib.MAX_WBITS)
-            else:
-                page = response.read()
-                # page = page.decode(coding).encode('utf-8')
-            return ["200", page]
-        except Exception, e:
-            print str(e)
-            return [str(e), None]
+
+        socket.setdefaulttimeout(timeout)
+        req = urllib2.Request(url)
+        req.add_header('User-agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)')
+        response = urllib2.urlopen(req)
+        # print response
+        page = ''
+        if response.headers.get('Content-Encoding') == 'gzip':
+            page = zlib.decompress(page, 16 + zlib.MAX_WBITS)
+        else:
+            page = response.read()
+            # page = page.decode(coding).encode('utf-8')
+        return ["200", page]
+
 
 
 class linkQuence:

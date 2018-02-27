@@ -4,7 +4,6 @@ from email.mime.text import MIMEText
 
 from app.util.configUtil import ReadWriteConfFile
 
-
 __author__ = '201512010283'
 
 
@@ -16,29 +15,18 @@ class Sendmail():
         self.mail_pass = "crystal08"  # 口令
         self.mail_postfix = "163.com"  # 发件箱的后缀
 
-        # mailto_list = ['mamingfeng007@gmail.com']
-        #mail_host = "smtp.163.com"  # 设置服务器
-        #mail_user = "mamingfeng007"  # 用户名
-        #mail_pass = "crystal08"  # 口令
-        #mail_postfix = "163.com"  # 发件箱的后缀
-
-
     def send_mail(self, sub, content):
         me = "hello" + "<" + self.mail_user + "@" + self.mail_postfix + ">"
         msg = MIMEText(content, _subtype='plain', _charset='gb2312')
         msg['Subject'] = sub
         msg['From'] = me
         msg['To'] = ";".join(self.mailto_list)
-        try:
-            server = smtplib.SMTP()
-            server.connect(self.mail_host)
-            server.login(self.mail_user, self.mail_pass)
-            server.sendmail(me, self.mailto_list, msg.as_string())
-            server.close()
-            return True
-        except Exception, e:
-            print str(e)
-            return False
+
+        server = smtplib.SMTP()
+        server.connect(self.mail_host)
+        server.login(self.mail_user, self.mail_pass)
+        server.sendmail(me, self.mailto_list, msg.as_string())
+        server.close()
 
 
 if __name__ == '__main__':
@@ -46,6 +34,6 @@ if __name__ == '__main__':
     mailto_list = [str(ReadWriteConfFile.getSectionValue("maillist", "user"))]
     sendobj = Sendmail(mailto_list)
     if sendobj.send_mail("hello", "hello world python test"):
-        print "发送成功"
+        print ("发送成功")
     else:
-        print "发送失败"
+        print ("发送失败")

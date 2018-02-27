@@ -14,7 +14,7 @@ class ExcelUtils:
 
     def gendata(self, colname, rowdata):
         retmap = map(None, colname, rowdata)
-        print dict(retmap)
+        print (dict(retmap))
 
     @staticmethod
     def readexcel(filename, sheetname):
@@ -22,10 +22,10 @@ class ExcelUtils:
             df = panda.read_excel(filename, sheetname=sheetname, na_values=['NA'])
             lenr = df.__len__()
             hnames = df.keys()
-            print hnames
+            print (hnames)
             for i in range(0, lenr):
                 rowdata = df.ix[i]
-                print type(rowdata)
+                print (type(rowdata))
                 excelutl = ExcelUtils()
                 excelutl.gendata(hnames, rowdata)
 

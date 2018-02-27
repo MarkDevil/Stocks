@@ -1,12 +1,12 @@
 # coding=utf-8
-from flask import Flask, request, render_template
+from flask import Flask, request
 from flask import json
 from flask import render_template
 
 from app.core.stocks import Stocks
 from app.util.configUtil import ReadWriteConfFile
 from app.util.emailUtil import Sendmail
-
+from app.core.checkTomcat import checkTomcatStatus
 
 app = Flask(__name__)
 
@@ -19,7 +19,6 @@ profitTitle = '公司分红'
 @app.route('/fgateway', methods=["GET", "POST"])
 def fgateway():
     a = request.get_json()
-    print a
     js = json.dumps(a)
     return js
 
@@ -28,20 +27,28 @@ def fgateway():
 def index():
     agentstocks = Stocks().findAgent()
     sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
-    profitStocks = Stocks().getProfit(2016)
-    return str(agentstocks).decode("utf-8").format()
+    # profitStocks = Stocks().getProfit(2016)
+    # return str(agentstocks).decode("utf-8").format()
     # sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
     # return str(agentstocks).decode("utf-8").format()
     ret_msg = str(agentstocks).decode("utf-8").format()
     return render_template('StocksPage.html', ret_msg=ret_msg)
 
 
-@app.route('/getNews')
+@app.route('/getNews', methods=["GET"])
 def getnews():
     news = Stocks().getlastedNews()
-    print news
+    print (news)
     retmsg = str(news).decode("utf-8").format()
-    return render_template("main.html", stocks=retmsg)
+    return render_template("main.html", retmsg=retmsg)
+
+
+@app.route('/getStats', methods=["GET"])
+def getStats():
+    fd = checkTomcatStatus()
+    # retmsg = json.dumps(fd)
+    print (type(fd))
+    return render_template("main.html", retmsg=fd)
 
 
 @app.errorhandler(404)
@@ -58,4 +65,4 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)

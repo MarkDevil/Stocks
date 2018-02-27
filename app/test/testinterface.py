@@ -14,7 +14,7 @@ class mytest(unittest.TestCase):
     @unittest.skip("skip")
     def testGatewayParams(self):
         r = requests.get("http://localhost:5000/fgateway", params=params)
-        print r.url + '\t'
+        print (r.url + '\t')
 
 
     def testcelerytask(self):

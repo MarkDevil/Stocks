@@ -21,10 +21,10 @@ wm = WorkManager()
 
 def getlianjiadata(pages):
     count = 0
-    print time.ctime()
+    print (time.ctime())
     for i in range(0, pages):
         url = 'http://bj.lianjia.com/ershoufang/pg' + str(i) + '/'
-        print 'starting parse page : ', str(i)
+        print ('starting parse page : ', str(i))
         page = urllib2.urlopen(url, timeout=50)
         soup = BeautifulSoup(page, "lxml")
 
@@ -32,7 +32,7 @@ def getlianjiadata(pages):
         for m in titles:
             if (m.get_text() == '筛选：') or (m.get_text() == '用户登录还没有链家网账号？马上注册'):
                 titles.remove(m)
-                print 'delete invaild data :', m.get_text()
+                print ('delete invaild data :', m.get_text())
             else:
                 continue
         houseInfos = soup.find_all('div', 'houseInfo')
