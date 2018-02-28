@@ -103,7 +103,6 @@ class Mysql:
                                            dbconfig['db'],
                                            dbconfig['charset']
                                            ))
-        # return sqlalchemy.create_engine('mysql+mysqldb://root:123@localhost:3306/testuser')
 
     '''
         返回数据库会话
