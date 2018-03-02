@@ -1,9 +1,12 @@
 # coding=utf-8
 import re
+
+import threading
 from app.util.logUtil import *
 from app.util.spyUtil import SpyUtils
-from app.util.dbOperator import *
-from app.Mapper.ipGetterMapper import IpInfo
+from app.util.redisUtils import RedisPool
+import random
+import time
 
 logger = Log('info').initlogger()
 spuy = SpyUtils()
@@ -15,10 +18,13 @@ class ProxyPool(object):
         pass
 
 
+redis = RedisPool().getRedis()
+
+
 class ProxyGetter(object):
 
     def __init__(self):
-        self.session = mysql.getSession()
+        pass
 
     def checkUrls(self):
         start_url = 'https://www.kuaidaili.com/free/inha/1/'
@@ -40,28 +46,71 @@ class ProxyGetter(object):
             logger.info(re_ip_adress)
             for adress, port in re_ip_adress:
                 # result = adress + ':' + port
-                session.add(IpInfo(adress, port))
-        session.commit()
-        session.close()
+                self.redis.set(adress, port)
+
+    """
+        yield 生成器函数，需要遍历返回值
+    """
 
     def crawl_kuaidaili_old(self):
         # type: () -> object
-        print('start crawl {}'.format('.....'))
-        for page in range(1, 4):
-            # 国内高匿代理
-            start_url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
-            logger.info(start_url)
-            html = spuy.gethtml(start_url)
-            ip_adress = re.compile(
-                '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\w+)</td>'
-            )
-            re_ip_adress = ip_adress.findall(html)
-            for adress, port in re_ip_adress:
-                result = adress + ':' + port
-                logger.info(result)
-                yield result.replace(' ', '')
+        logger.info('start crawl {}'.format('.....'))
+        page = random.choice(range(1, 20))
+        # 国内高匿代理
+        start_url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
+        logger.info(start_url)
+        html = spuy.gethtml(start_url)
+        ip_adress = re.compile(
+            '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\w+)</td>'
+        )
+        re_ip_adress = ip_adress.findall(html)
+        for adress, port in re_ip_adress:
+            result = adress + ':' + port
+            logger.info(result)
+            RedisPool().getRedis().hset('kuaidaili', adress, port)
+            result.replace(' ', '')
+
+    @staticmethod
+    def getproxy():
+        proxys = []
+        dict = redis.hgetall('kuaidaili')
+        for i in dict:
+            proxys.append(str(i + ":" + str(dict[i])))
+        logger.info(random.choice(proxys))
+
+    @staticmethod
+    def proxysNum():
+        dict = redis.hgetall('kuaidaili')
+        logger.info("[http代理]代理池中的可用代理为[{}]".format(len(dict)))
+
+    @staticmethod
+    def start():
+        threads = []
+        for i in range(1, 10):
+            threads.append(CrawlRun(i, "thread-{}".format(i)))
+            time.sleep(1)
+        for thread in threads:
+            thread.start()
+            time.sleep(2)
+        for t in threads:
+            t.join()
+
+
+class CrawlRun(threading.Thread):
+
+    def __init__(self, threadID, name):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        logger.info("爬虫线程-{}-{} 启动成功".format(threadID, name))
+
+    def run(self):
+        p = ProxyGetter()
+        p.crawl_kuaidaili_old()
 
 
 if __name__ == '__main__':
-    # ProxyGetter().checkUrls()
-    ProxyGetter().crawl_kuaidaili()
+
+    while True:
+        ProxyGetter.proxysNum()
+        ProxyGetter.start()

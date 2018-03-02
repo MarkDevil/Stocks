@@ -22,6 +22,7 @@ class FileParser(object):
             for line in lines:
                 if line.startswith('#') or line.startswith("\n"):
                     continue
+                line.strip('\n')
                 arrays = line.split("=")
                 print(arrays)
                 key = arrays[0]
@@ -54,7 +55,7 @@ class FileParser(object):
 
 
 if __name__ == '__main__':
-    newDict = {'dubbo.registry.address': 'marktest', 'dubbo.consumer.check': 'false',
+    newDict = {'dubbo.registry.address': 'marktest', 'dubbo.consumer.check': 'true',
                'dubbo.registry.file': './hb_approval_dubbo.cache'}
     fp = FileParser()
     content = fp.readfile('p', '../data/test.properties')
