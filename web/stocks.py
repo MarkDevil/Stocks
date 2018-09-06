@@ -2,13 +2,15 @@
 from flask import Flask, request
 from flask import json
 from flask import render_template
+import os
 
-from app.core.stocks import Stocks
-from app.util.configUtil import ReadWriteConfFile
-from app.util.emailUtil import Sendmail
-from app.core.checkTomcat import checkTomcatStatus
+from core.stocks import Stocks
+from util.configutil import ReadWriteConfFile
+from util.emailutil import Sendmail
+from core.checkTomcat import checkTomcatStatus
 
-app = Flask(__name__)
+
+stockapp = Flask(__name__)
 
 maillist = [ReadWriteConfFile.getSectionValue('maillist', 'user')]
 sendobj = Sendmail(mailto_list=maillist)
@@ -16,14 +18,14 @@ subjectTitle = '股票机构买入榜单'
 profitTitle = '公司分红'
 
 
-@app.route('/fgateway', methods=["GET", "POST"])
+@stockapp.route('/fgateway', methods=["GET", "POST"])
 def fgateway():
     a = request.get_json()
     js = json.dumps(a)
     return js
 
 
-@app.route('/getstocks')
+@stockapp.route('/getstocks')
 def index():
     agentstocks = Stocks().findAgent()
     sendobj.send_mail(subjectTitle, str(agentstocks).decode("utf-8"))
@@ -35,7 +37,7 @@ def index():
     return render_template('StocksPage.html', ret_msg=ret_msg)
 
 
-@app.route('/getNews', methods=["GET"])
+@stockapp.route('/getNews', methods=["GET"])
 def getnews():
     news = Stocks().getlastedNews()
     print (news)
@@ -43,7 +45,7 @@ def getnews():
     return render_template("main.html", retmsg=retmsg)
 
 
-@app.route('/getStats', methods=["GET"])
+@stockapp.route('/getStats', methods=["GET"])
 def getStats():
     fd = checkTomcatStatus()
     # retmsg = json.dumps(fd)
@@ -51,12 +53,12 @@ def getStats():
     return render_template("main.html", retmsg=fd)
 
 
-@app.errorhandler(404)
+@stockapp.errorhandler(404)
 def page_not_found(e):
     return "page not found"
 
 
-# @app.route('/gethouse', methods=["GET", "POST"])
+# @route('/gethouse', methods=["GET", "POST"])
 # def gethouse():
 #     mysql = Mysql()
 #     dbsession = mysql.getSession()
@@ -65,4 +67,4 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True)
+    stockapp.run(debug=True, threaded=True)

@@ -2,11 +2,11 @@ from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import MultiprocessFTPServer, ThreadedFTPServer  # <-
 from pyftpdlib.authorizers import DummyAuthorizer
 
-import app.util.logUtil
+import util.logutil
 
 server = None
 
-logger = app.util.logUtil.Log("info").initlogger()
+logger = util.logutil.Log("info").initlogger()
 
 
 def startftpServer(concurrytype):

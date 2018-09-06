@@ -16,7 +16,7 @@ class Stocks:
         df.sort_values(by='bamount')
 
         print (df[df.net > 5000])
-        return df[(df.net) > 5000]
+        return df[df.net > 5000]
 
     '''
         公司分红报告

@@ -5,7 +5,7 @@ import os
 import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-DC_PATH = BASE_DIR + "/src/data/districtcode.txt"
+DC_PATH = BASE_DIR + "/src/resource/districtcode.txt"
 
 
 # 随机生成手机号码

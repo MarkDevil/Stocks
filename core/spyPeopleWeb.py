@@ -1,5 +1,5 @@
 # coding=utf-8
-from app.util.spyUtil import SpyUtils
+from util.spyutil import SpyUtils
 import re
 from threading import Timer
 
@@ -19,7 +19,7 @@ class SpyPeopleWeb():
         )
 
         for ret in retlist:
-            print("Get data from 'www.bjcyrc.gov.cn' :", ret)
+            print("Get resource from 'www.bjcyrc.gov.cn' :", ret)
             # self.cleanData(str(ret), r'[^[.[\u4e00-\u9fa5]+.]]')
             # return len(retlist)
 

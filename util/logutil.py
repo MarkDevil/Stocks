@@ -25,6 +25,8 @@ class Log:
         return logging.getLogger()
 
 
+
+
 if __name__ == '__main__':
     logger = Log("info").initlogger()
     logger.info("mark test")

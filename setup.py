@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='Stocks',
     version='',
-    packages=['app', 'app.core', 'app.test', 'app.util', 'app.Mapper', 'app.config', 'app.web'],
+    packages=['core', 'test', 'util', 'mapper', 'config', 'web', 'test'],
     url='',
     license='',
     author='201512010283',

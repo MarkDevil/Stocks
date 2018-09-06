@@ -1,7 +1,7 @@
 # coding=utf-8
 __author__ = 'mingfengma'
 
-from app.util.spyUtil import *
+from util.spyutil import *
 
 
 spyutil = SpyUtils()

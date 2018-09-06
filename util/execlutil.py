@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import pandas as panda
-from logUtil import Log
+from logutil import Log
 
 LOGDEBUG = Log("debug").initlogger()
 LOGINFO = Log("info").initlogger()

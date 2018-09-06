@@ -58,5 +58,5 @@ if __name__ == '__main__':
     newDict = {'dubbo.registry.address': 'marktest', 'dubbo.consumer.check': 'true',
                'dubbo.registry.file': './hb_approval_dubbo.cache'}
     fp = FileParser()
-    content = fp.readfile('p', '../data/test.properties')
-    fp.modifyvalue('../data/test.properties', newDict)
+    content = fp.readfile('p', '../resource/test.properties')
+    fp.modifyvalue('../resource/test.properties', newDict)

@@ -3,7 +3,7 @@ __author__ = '201512010283'
 
 import requests
 import unittest
-from app.core.celerytask import *
+from core.celerytask import *
 
 
 params = {'mark1': 'val1', 'mark2': 'val2'}

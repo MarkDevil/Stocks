@@ -1,14 +1,19 @@
 # coding=utf-8
 import ConfigParser
 import os
+from logutil import Log
 
 
 class ReadWriteConfFile:
+    log = Log("info").initlogger()
+
     def __init__(self):
         pass
 
     currentDir = os.path.dirname(__file__)
-    filepath = currentDir + os.path.sep + "setting.ini"
+
+    filepath = os.path.abspath(os.path.dirname(currentDir) + os.path.sep + ".") + os.path.sep + 'setting.ini'
+    log.info(filepath)
     #print filepath
 
     @staticmethod

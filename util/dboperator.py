@@ -1,8 +1,8 @@
 # coding=utf-8
 import MySQLdb
 import logging
-from app.Mapper.lianjiaMapper import *
-from configUtil import ReadWriteConfFile
+from mapper.lianjiaMapper import *
+from configutil import ReadWriteConfFile
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
@@ -52,7 +52,7 @@ class Mysql:
             cursor.execute(sql)
             db.commit()
         except MySQLdb.IntegrityError:
-            print ('data is duplicate')
+            print ('resource is duplicate')
         finally:
             if db:
                 db.close()
@@ -61,7 +61,7 @@ class Mysql:
         cursor = db.cursor()
         cursor.execute(sql)
         data = cursor.fetchall()
-        print ('data', isinstance(data, unicode))
+        print ('resource', isinstance(data, unicode))
         print ("result number " + str(list(data)))
         return data
 

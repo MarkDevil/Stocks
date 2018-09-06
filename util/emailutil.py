@@ -2,7 +2,7 @@
 import smtplib
 from email.mime.text import MIMEText
 
-from app.util.configUtil import ReadWriteConfFile
+from util.configutil import ReadWriteConfFile
 
 __author__ = '201512010283'
 

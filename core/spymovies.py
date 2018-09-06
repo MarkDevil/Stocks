@@ -1,6 +1,6 @@
 # coding = utf-8
 
-from app.util.spyUtil import *
+from util.spyutil import *
 
 spy = SpyUtils()
 

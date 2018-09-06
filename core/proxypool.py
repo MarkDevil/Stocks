@@ -2,9 +2,9 @@
 import re
 
 import threading
-from app.util.logUtil import *
-from app.util.spyUtil import SpyUtils
-from app.util.redisUtils import RedisPool
+from util.logutil import *
+from util.spyutil import SpyUtils
+from util.redisutil import RedisPool
 import random
 import time
 
@@ -40,7 +40,7 @@ class ProxyGetter(object):
             html = spuy.gethtml(start_url)
             logger.info('page source: ' + html)
             ip_adress = re.compile(
-                '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\w+)</td>'
+                '<td resource-title="IP">(.*)</td>\s*<td resource-title="PORT">(\w+)</td>'
             )
             re_ip_adress = ip_adress.findall(html)
             logger.info(re_ip_adress)
@@ -61,7 +61,7 @@ class ProxyGetter(object):
         logger.info(start_url)
         html = spuy.gethtml(start_url)
         ip_adress = re.compile(
-            '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\w+)</td>'
+            '<td resource-title="IP">(.*)</td>\s*<td resource-title="PORT">(\w+)</td>'
         )
         re_ip_adress = ip_adress.findall(html)
         for adress, port in re_ip_adress:

@@ -11,7 +11,7 @@ def crawlkuaidaili():
         start_url = 'https://www.kuaidaili.com/free/inha/1/'
         html = requests.get(start_url)
         ip_adress = re.compile(
-            '<td data-title="IP">(.*)</td>\s*<td data-title="PORT">(\w+)</td>'
+            '<td resource-title="IP">(.*)</td>\s*<td resource-title="PORT">(\w+)</td>'
         )
         re_ip_adress = ip_adress.findall(html)
         for adress, port in re_ip_adress:
