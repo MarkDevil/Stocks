@@ -4,14 +4,12 @@ __author__ = 'mingfengma'
 import paramiko
 import util.logutil
 
-HOSTS = ['192.168.18.45']
+HOSTS = ['localhost']
 PORT = 22
 USER = 'root'
 PASSWD = 'qwe123ASD()'
-PROJECTPATH = '/houbank/server'
-PROJECTNAMES = ['hbadmin', 'tomcat-hbadmin-api',
-                'tomcat-aloan-las', 'tomcat-aloan-oms',
-                'tomcat-aloan-plas-api', 'tomcat-aloan-plas-task']
+PROJECTPATH = '/root/server'
+PROJECTNAMES = ['tomcat-task']
 logger = util.logutil.Log("info").initlogger()
 global ssh
 

@@ -74,6 +74,12 @@ def add_user(name):
     ret = {'ret': 'ok'}
     return jsonify(ret)
 
+@stockapp.route('/user/get/<name>', methods={'GET', 'POST'})
+def get_user(name):
+    session = DBSession()
+    session.query(name)
+    ret = {'ret': 'ok'}
+    return jsonify(ret)
 
 @stockapp.route('/getNews', methods=["GET"])
 def getnews():

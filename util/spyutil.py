@@ -50,7 +50,7 @@ class SpyUtils:
     '''
 
     def gethtml(self, url):
-        response = requests.get(url=url, headers=self.requestheader())
+        response = requests.get(url=url, verify=False, headers=self.requestheader())
         html = response.content
         return html
 
@@ -60,9 +60,7 @@ class SpyUtils:
 
     def getelements(self, url, nodename, attrs=None):
         soup = BeautifulSoup(self.gethtml(url))
-        # print(soup)
-        eles = soup.findAll(nodename, attrs=attrs)
-        print(eles)
+        eles = soup.findAll(nodename, attrs=attrs, recursive=True)
         return eles
 
     def get(self, url):

@@ -6,7 +6,7 @@ from configutil import ReadWriteConfFile
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
-__author__ = '201512010283'
+__author__ = 'mark'
 
 
 def testMysql():

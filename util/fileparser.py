@@ -44,6 +44,7 @@ class FileParser(object):
     """
         修改指定文件中的
     """
+
     def modifyvalue(self, inpath, kvs):
         confs = self.readfile('p', inpath)
         if kvs is not None or kvs is not '':

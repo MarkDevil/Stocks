@@ -6,7 +6,7 @@ setup(
     packages=['core', 'test', 'util', 'mapper', 'config', 'web', 'test'],
     url='',
     license='',
-    author='201512010283',
+    author='mark',
     author_email='mamingfeng007@gmail.com',
     description=''
 )
