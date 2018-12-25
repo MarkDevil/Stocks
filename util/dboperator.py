@@ -10,7 +10,7 @@ __author__ = 'mark'
 
 
 def testMysql():
-    db = MySQLdb.connect("10.100.141.39", "pay_trade", "pay_trade@123", "pay_trade")
+    db = MySQLdb.connect("localhost")
     if db:
         print ("init Database connection successfully")
         cursor = db.cursor()
