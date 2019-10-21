@@ -129,7 +129,7 @@ unittest2==1.1.0
 urllib3==1.23
 vine==1.1.4
 weditor==0.0.4.dev17
-Werkzeug==0.11.11
+Werkzeug==0.15.3
 whichcraft==0.4.1
 wrapt==1.10.11
 xattr==0.6.4
