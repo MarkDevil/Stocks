@@ -10,6 +10,8 @@ import time
 
 logger = Log('info').initlogger()
 spuy = SpyUtils()
+redis = RedisPool().getRedis()
+
 
 
 class ProxyPool(object):
@@ -18,10 +20,11 @@ class ProxyPool(object):
         pass
 
 
-redis = RedisPool().getRedis()
 
 
 class ProxyGetter(object):
+
+    threads = []
 
     def __init__(self):
         pass
@@ -55,10 +58,10 @@ class ProxyGetter(object):
     def crawl_kuaidaili_old(self):
         # type: () -> object
         logger.info('start crawl {}'.format('.....'))
-        page = random.choice(range(1, 20))
+        page = random.choice(range(1, 100))
         # 国内高匿代理
         start_url = 'https://www.kuaidaili.com/free/inha/{}/'.format(page)
-        logger.info(start_url)
+        logger.info("正在爬取第{}页数据".format(page))
         html = spuy.gethtml(start_url)
         ip_adress = re.compile(
             '<td resource-title="IP">(.*)</td>\s*<td resource-title="PORT">(\w+)</td>'
@@ -70,25 +73,25 @@ class ProxyGetter(object):
             RedisPool().getRedis().hset('kuaidaili', adress, port)
             result.replace(' ', '')
 
-    @staticmethod
-    def getproxy():
+    @classmethod
+    def getproxy(cls):
         proxys = []
         dict = redis.hgetall('kuaidaili')
         for i in dict:
             proxys.append(str(i + ":" + str(dict[i])))
-        logger.info(random.choice(proxys))
+        proxy = random.choice(proxys)
+        return proxy
 
-    @staticmethod
-    def proxysNum():
+    @classmethod
+    def proxysNum(cls):
         dict = redis.hgetall('kuaidaili')
         logger.info("[http代理]代理池中的可用代理为[{}]".format(len(dict)))
 
-    @staticmethod
-    def start():
-        threads = []
+    @classmethod
+    def start(cls):
+        threads = cls.threads
         for i in range(1, 10):
             threads.append(CrawlRun(i, "thread-{}".format(i)))
-            time.sleep(1)
         for thread in threads:
             thread.start()
             time.sleep(2)
@@ -110,6 +113,7 @@ class CrawlRun(threading.Thread):
 
 
 if __name__ == '__main__':
+    logger.info("获取到一个代理地址:{}".format(ProxyGetter.getproxy()))
 
     while True:
         ProxyGetter.proxysNum()

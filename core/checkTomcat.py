@@ -52,7 +52,7 @@ def checkTomcatStatus():
         stdin, stdout, stderr = \
             ssh.exec_command('docker ps | grep mls')
         data1 = stdout.read()
-        logger.info("ret msg '%s'", str(data1).split(" "))
+        # logger.info("ret msg '%s'", str(data1).split(" "))
 
     ssh.close()
     logger.info("Check status is '%s'", fd)

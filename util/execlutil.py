@@ -14,7 +14,10 @@ class ExcelUtils:
 
     def gendata(self, colname, rowdata):
         retmap = map(None, colname, rowdata)
-        print (dict(retmap))
+        # rmap = dict(retmap)
+        # LOGINFO.info(retmap.__len__())
+        print('test:' + str(retmap[0]) + str(retmap[1]) + str(retmap[2]) + str(retmap[3]) + str(retmap[4]))
+
 
     @staticmethod
     def readexcel(filename, sheetname):
@@ -25,10 +28,10 @@ class ExcelUtils:
             print (hnames)
             for i in range(0, lenr):
                 rowdata = df.ix[i]
-                print (type(rowdata))
+                # print (type(rowdata))
                 excelutl = ExcelUtils()
                 excelutl.gendata(hnames, rowdata)
 
 
 if __name__ == '__main__':
-    ExcelUtils.readexcel('xls', sheetname='test2')
+    ExcelUtils.readexcel('/Users/mark/Desktop/ssj.xlsx', sheetname='test')

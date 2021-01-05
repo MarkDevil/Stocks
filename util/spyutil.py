@@ -49,8 +49,8 @@ class SpyUtils:
         requests get
     '''
 
-    def gethtml(self, url):
-        response = requests.get(url=url, headers=self.requestheader())
+    def gethtml(self, url, proxys=None):
+        response = requests.get(url=url, headers=self.requestheader(), proxys=proxys)
         html = response.content
         return html
 
@@ -74,9 +74,11 @@ class SpyUtils:
             return reg.group()
         else:
             return None
+
     '''
         清理页面只保留body部分
     '''
+
     def cleanpage(self, page):
         rets = re.findall(r'<*body>.+<*/body>', page)
         return str(rets)

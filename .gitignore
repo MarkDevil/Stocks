@@ -8,3 +8,6 @@
 out
 gen
 build
+core/__pycache__/
+core/celerytask.pyc
+web/__pycache__/
